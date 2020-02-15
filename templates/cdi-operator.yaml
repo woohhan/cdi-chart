@@ -322,25 +322,25 @@ spec:
         - name: DEPLOY_CLUSTER_RESOURCES
           value: "true"
         - name: OPERATOR_VERSION
-          value: v1.13.0
+          value: {{ .Values.images.cdi.tag }}
         - name: CONTROLLER_IMAGE
-          value: kubevirt/cdi-controller:v1.13.0
+          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-controller:{{ .Values.images.cdi.tag }}
         - name: IMPORTER_IMAGE
-          value: kubevirt/cdi-importer:v1.13.0
+          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-importer:{{ .Values.images.cdi.tag }}
         - name: CLONER_IMAGE
-          value: kubevirt/cdi-cloner:v1.13.0
+          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-cloner:{{ .Values.images.cdi.tag }}
         - name: APISERVER_IMAGE
-          value: kubevirt/cdi-apiserver:v1.13.0
+          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-apiserver:{{ .Values.images.cdi.tag }}
         - name: UPLOAD_SERVER_IMAGE
-          value: kubevirt/cdi-uploadserver:v1.13.0
+          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-uploadserver:{{ .Values.images.cdi.tag }}
         - name: UPLOAD_PROXY_IMAGE
-          value: kubevirt/cdi-uploadproxy:v1.13.0
+          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-uploadproxy:{{ .Values.images.cdi.tag }}
         - name: VERBOSITY
-          value: "1"
+          value: {{ .Values.verbosity | quote }}
         - name: PULL_POLICY
-          value: IfNotPresent
-        image: kubevirt/cdi-operator:v1.13.0
-        imagePullPolicy: IfNotPresent
+          value: {{ .Values.images.cdi.pullPolicy }}
+        image: {{ .Values.images.cdi.repositoryPrefix }}/cdi-operator:{{ .Values.images.cdi.tag }}
+        imagePullPolicy: {{ .Values.images.cdi.pullPolicy }}
         name: cdi-operator
         ports:
         - containerPort: 60000

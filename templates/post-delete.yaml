@@ -1,0 +1,33 @@
+# Deleting CRD
+# See link: https://github.com/helm/charts/blob/d58247103fafd5930792bb1fd3ac240547523200/stable/prometheus-operator/templates/prometheus-operator/cleanup-crds.yaml#L33
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cdi-post-delete
+  # TODO: Make Service Account
+  namespace: kube-system
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": hook-succeeded
+  labels:
+    app: cdi-post-delete
+spec:
+  template:
+    metadata:
+      name: cdi-post-delete
+      labels:
+        app: cdi-post-delete
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: kubectl
+          image: {{ .Values.images.hyperkube.repository }}:{{ .Values.images.hyperkube.tag }}
+          imagePullPolicy: {{ .Values.images.hyperkube.pullPolicy }}
+          command:
+          - /bin/sh
+          - -c
+          - >
+              kubectl delete crd cdis.cdi.kubevirt.io --ignore-not-found=true;
+      restartPolicy: OnFailure
