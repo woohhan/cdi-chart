@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cdi-chart
+name: cdi
 description: A Helm chart for containerized-data-importer
 type: application
 version: 1.0.0
