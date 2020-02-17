@@ -1,4 +1,4 @@
-# containerized-data-importer Helm Chart ![cdi-chart](https://github.com/woohhan/cdi-chart/workflows/cdi-chart/badge.svg)
+# containerized-data-importer Helm Chart ![cdi-chart](https://github.com/woohhan/cdi-chart/workflows/e2e/badge.svg)
 A Helm chart for [kubevirt/containerized-data-importer](https://github.com/kubevirt/containerized-data-importer)
 
 ## Quick Start

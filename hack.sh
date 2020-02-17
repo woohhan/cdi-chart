@@ -2,6 +2,20 @@
 set -euo pipefail
 shopt -s inherit_errexit
 
+function wait_condition {
+  cond=$1
+  timeout=$2
+
+  for ((i=0; i<timeout; i+=5)) do
+    echo "Waiting for ${i}s condition: \"$cond\""
+    if eval $cond > /dev/null 2>&1; then echo "Conditon met"; return 0; fi;
+    sleep 5
+  done
+
+  echo "Condition timeout"
+  return 1
+}
+
 function install {
   helm install cdi .
   sleep 30
@@ -15,15 +29,7 @@ function install {
 
 function uninstall {
   helm uninstall cdi
-  if [[ $(kubectl get ns | grep cdi) ]]; then sleep 10; echo 'Waiting for deleting namespace...'; fi
-  if [[ $(kubectl get ns | grep cdi) ]]; then sleep 10; echo 'Waiting for deleting namespace...'; fi
-  if [[ $(kubectl get ns | grep cdi) ]]; then sleep 10; echo 'Waiting for deleting namespace...'; fi
-  if [[ $(kubectl get ns | grep cdi) ]]; then sleep 10; echo 'Waiting for deleting namespace...'; fi
-  if [[ $(kubectl get ns | grep cdi) ]]; then sleep 10; echo 'Waiting for deleting namespace...'; fi
-  if [[ $(kubectl get ns | grep cdi) ]]; then sleep 10; echo 'Waiting for deleting namespace...'; fi
-  if [[ $(kubectl get ns | grep cdi) ]]; then false; fi
-  kubectl get pods -A
-  kubectl get ns
+  wait_condition "! kubectl get ns | grep cdi" 180 
 }
 
 case "${1:-}" in
