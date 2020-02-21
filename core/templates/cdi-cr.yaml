@@ -4,4 +4,4 @@ metadata:
   name: cdi
   namespace: cdi
 spec:
-  imagePullPolicy: {{ .Values.images.cdi.pullPolicy }}
+  imagePullPolicy: {{ .Values.image.pullPolicy }}

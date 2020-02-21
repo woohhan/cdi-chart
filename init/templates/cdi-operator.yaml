@@ -322,25 +322,25 @@ spec:
         - name: DEPLOY_CLUSTER_RESOURCES
           value: "true"
         - name: OPERATOR_VERSION
-          value: {{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.tag }}
         - name: CONTROLLER_IMAGE
-          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-controller:{{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.repositoryPrefix }}/cdi-controller:{{ .Values.image.tag }}
         - name: IMPORTER_IMAGE
-          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-importer:{{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.repositoryPrefix }}/cdi-importer:{{ .Values.image.tag }}
         - name: CLONER_IMAGE
-          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-cloner:{{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.repositoryPrefix }}/cdi-cloner:{{ .Values.image.tag }}
         - name: APISERVER_IMAGE
-          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-apiserver:{{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.repositoryPrefix }}/cdi-apiserver:{{ .Values.image.tag }}
         - name: UPLOAD_SERVER_IMAGE
-          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-uploadserver:{{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.repositoryPrefix }}/cdi-uploadserver:{{ .Values.image.tag }}
         - name: UPLOAD_PROXY_IMAGE
-          value: {{ .Values.images.cdi.repositoryPrefix }}/cdi-uploadproxy:{{ .Values.images.cdi.tag }}
+          value: {{ .Values.image.repositoryPrefix }}/cdi-uploadproxy:{{ .Values.image.tag }}
         - name: VERBOSITY
           value: {{ .Values.verbosity | quote }}
         - name: PULL_POLICY
-          value: {{ .Values.images.cdi.pullPolicy }}
-        image: {{ .Values.images.cdi.repositoryPrefix }}/cdi-operator:{{ .Values.images.cdi.tag }}
-        imagePullPolicy: {{ .Values.images.cdi.pullPolicy }}
+          value: {{ .Values.image.pullPolicy }}
+        image: {{ .Values.image.repositoryPrefix }}/cdi-operator:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: cdi-operator
         ports:
         - containerPort: 60000

@@ -17,19 +17,29 @@ function wait_condition {
 }
 
 function install {
-  helm install cdi .
+  echo "Install init..."
+  helm template init | kubectl apply -f -
+
+  echo "Install core..."
+  helm template core | kubectl apply -f -
+
+  echo "Wait install..."
   sleep 30
-  echo 'Waiting for deployment...'
   kubectl wait --for=condition=available deployment cdi-apiserver --timeout=30s -n cdi
   kubectl wait --for=condition=available deployment cdi-deployment --timeout=30s -n cdi
   kubectl wait --for=condition=available deployment cdi-operator --timeout=30s -n cdi
   kubectl wait --for=condition=available deployment cdi-uploadproxy --timeout=30s -n cdi
-  kubectl get pods -A
 }
 
 function uninstall {
-  helm uninstall cdi
-  wait_condition "! kubectl get ns | grep cdi" 180 
+  echo "Uninstall core..."
+  helm template core | kubectl delete -f -
+
+  echo "Uninstall init..."
+  helm template init | kubectl delete -f -
+
+  echo "Wait uninstall..."
+  wait_condition "! kubectl get ns | grep cdi" 180
 }
 
 case "${1:-}" in
@@ -39,13 +49,9 @@ i)
 u)
   uninstall
   ;;
-t)
-  helm template .
-  ;;
 *)
   echo "usage:" >&2
   echo "  $0 i install" >&2
   echo "  $0 u uninstall" >&2
-  echo "  $0 t template" >&2
   ;;
 esac

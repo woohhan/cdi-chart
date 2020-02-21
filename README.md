@@ -3,6 +3,10 @@ A Helm chart for [kubevirt/containerized-data-importer](https://github.com/kubev
 
 ## Quick Start
 1. Install Helm(>3.0): [Installing Helm](https://helm.sh/docs/intro/install/)
-2. Check `values.yaml` file
-3. Install with: `helm install cdi .`
-4. Uninstall with: `helm uninstall cdi`
+2. Check `init/values.yaml`, `core/values.yaml` files
+3. Install cdi-init: `helm template init | kubectl apply -f -`
+4. Install cdi-core: `helm template core | kubectl apply -f -`
+
+## Uninstall
+1. Uninstall cdi-core: `helm template core | kubectl delete -f -`
+2. Uninstall cdi-init: `helm template init | kubectl delete -f -`
